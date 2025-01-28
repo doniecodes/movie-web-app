@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import {NavLink} from 'react-router-dom'
+import {NavLink, Link} from 'react-router-dom'
 import {FaHeart, FaHome, FaUser} from 'react-icons/fa'
 import { IoTrendingUp } from "react-icons/io5";
 import { RiMovie2Fill } from "react-icons/ri";
@@ -53,7 +53,7 @@ const MainOutlet = () => {
                 </nav>
 
                 {/* sign up button */}
-                <button className='sign-up-btn'><span><FaUser /></span>Sign Up</button>
+                <Link to="signup" className='sign-up-btn'><span><FaUser /></span>Sign Up</Link>
 
                 {/* tmdb attribution */}
                 <img src="../images/tmdb.svg" alt="" className='tmdb-svg'/>

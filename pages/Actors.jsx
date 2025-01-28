@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
 const Actors = () => {
   const [actors, setActors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [term, setTerm] = useState("");
-  const [actorDetails, setActorDetails] = useState([]);
   const [count, setCount] = useState(1);
 
   useEffect(()=> {
@@ -19,22 +19,9 @@ const Actors = () => {
         setLoading(false);
       })
     }, [count, term])
-
-    // Actor Details
-  useEffect(()=> {
-      actors.map((actor)=> {
-        fetch(`https://api.themoviedb.org/3/person/${actor.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`)
-      .then(res=> res.json())
-      .then((data)=> {
-        setActorDetails((prevState)=> {
-          return [...prevState, data]
-        })
-      })
-      })
-    }, [actors])
-
-    const inputSearch = (e)=> {
-        setTerm(e);
+    
+    const handleSubmit = (e)=> {
+        e.preventDefault();
       }
     
       /* Change Movies Page Function*/
@@ -55,24 +42,28 @@ const Actors = () => {
     <>
     {actors.length !== 0 &&
     <header>
-    <form action="">
-        <input className='header-input'
-        type="text"
-        name="search"
-        value={term}
-        onChange={(e)=> inputSearch(e.target.value)}/>
-        <button className='header-btn'>Search</button>
-    </form>
+    <form action="" onSubmit={handleSubmit}>
+            <input className='header-input'
+            type="text"
+            name="search"
+            value={term}
+            onChange={(e)=> setTerm(e.target.value)}/>
+            <button className='header-btn'><FaSearch /></button>
+        </form>
   </header>}
 
     {/* loading screen */}
-    {loading && <h2 className='px-8 py-8'>Loading....</h2>}
+    { loading && 
+      <div className='loading-element'>
+        <span>.</span>
+        <span>.</span>
+        <span>.</span>
+      </div> }
 
     <section className='actors-section'>
       <div className="cards" ref={cardsSection}>
       {
         actors.map((actor)=> {
-          // actors birthDay
 
           return <Link to={`/actors/${actor.id}`} key={actor.id}>
           <div className="card">

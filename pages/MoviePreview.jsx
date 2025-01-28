@@ -14,6 +14,7 @@ const MoviePreview = () => {
     const [trailerUrl, setTrailerUrl] = useState("");
     const [trailerVideo, setTrailerVideo] = useState(null);
     const [recommended, setRecommended] = useState(null);
+    const [genres, setGenres] = useState([]);
     const navigate = useNavigate();
 
     useEffect(()=> {
@@ -54,6 +55,21 @@ const MoviePreview = () => {
         setTrailerVideo(null);
     }
 
+      // fetch genres
+      useEffect(()=> {
+        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`)
+        .then(res=> res.json())
+        .then((data)=> {
+          setGenres(data.genres);
+        })
+      }, [id, movie])
+
+      const genreNames = movie !== null ? genres.map((genre)=> {
+        if(genre.id === movie.genres[0].id){
+            return (genre.name)
+        }
+    }) : null;
+
     // RECOMMENDED MOVIES
     const movieName = movie !== null ? movie.title.split(' ')[0] : "";
     useEffect(()=> {
@@ -62,28 +78,28 @@ const MoviePreview = () => {
         .then((data)=> {
             setRecommended(data.results);
         })
-    }, [movie]);
+    }, [movie, id]);
     
     // Removing the current movie from showing on recommendations
     const recommendedExist = recommended !== null && recommended;
     const similarMovies = recommendedExist && recommended.filter((similar)=> similar.title !== movie.title).slice(0, 5);
 
     const handleToFavourites = (movieId)=> {
-        fetch(`https://api.themoviedb.org/3/account/${movieId}/favorite`, {
+        /* fetch(`https://api.themoviedb.org/3/account/${movieId}/favorite`, {
             
             method : 'POST',
             headers : {
                 accept: 'application/json',
                 'content-type': 'application/json'
             }
-        })
+        }) */
     }
 
   return (
     <>
     <section className="movie-preview-section" ref={moviePreviewRef}>
         
-        {movie !== null && 
+        {movie !== null &&
         <div className="preview-div">
         <div className="gradient-div">
         <div className="gradient"></div>
@@ -91,7 +107,7 @@ const MoviePreview = () => {
         </div>
         <button className="backButton"
         onClick={handleGoBack}>
-        Back</button>
+        &larr; Back</button>
         <div className="preview-absolute">
             <div className="preview-movie-name-div">
             <h2 className="preview-movie-name">
@@ -100,8 +116,9 @@ const MoviePreview = () => {
             <span className='preview-ratings'><span className='star'><FaStar /></span> {movie.vote_average}/10</span>
             </div>
             <p className="movie-preview-details">
+                <span className='release-date'>{}</span> 
                 <span className='release-date'>{movie.release_date}</span> 
-                <span className='genre'>{}</span> 
+                {genres.length !== 0 ? <span className='genre'>{genreNames}</span> : null} 
                 <span className='runtime'>{movie.runtime} minutes</span> 
             </p>
             <p className="preview-text">
@@ -109,7 +126,7 @@ const MoviePreview = () => {
             </p>
             {movie !== null &&
             <div className="preview-btns">
-                <button onClick={handleTrailerVideo} className='watch-now-btn'><span><FaPlay /></span>Watch Now</button>
+                <button onClick={handleTrailerVideo} className='watch-now-btn'><span><FaPlay /></span>Play Trailer</button>
                 <button onClick={()=> handleToFavourites(movie.id)} className='add-to-favourites-btn'><FaHeart/></button>
             </div>}
         </div>
@@ -143,7 +160,7 @@ const MoviePreview = () => {
                       </div>
                       <div className="card-details">
                         <h2 className="card-title">{movie.title}</h2>
-                        <p className='year-and-genre'>{movie.release_date} | <span>{/* {genreNames} */}</span> </p>
+                        <p className='year-and-genre'>{movie.release_date.split("-")[0]}</p>
                       </div>
                     </div>
                 </Link>

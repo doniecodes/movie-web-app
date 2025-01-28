@@ -2,8 +2,9 @@ import React, { useRef } from 'react'
 import { useState, useEffect } from 'react'
 import Movie from '../components/Movie';
 import { useSearchParams, useLoaderData } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
-/* export async function loaderMovies (count, searchParams){
+export async function loaderMovies (count, searchParams){
     const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&include_adult=false&page=${count}&${searchParams}`)
 
     if(!res.ok){
@@ -15,7 +16,7 @@ import { useSearchParams, useLoaderData } from 'react-router-dom';
     }
     const data = await res.json();
     return data.results;
-} */
+}
 
 const Movies = () => {
 /*   const data = useLoaderData();
@@ -31,8 +32,6 @@ const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
 // fetch movies
-
-
   useEffect(()=> {
     fetch(!term ? `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&include_adult=false&page=${count}&${searchParams}`
      : `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&include_adult=true&page=${count}&query=${term}`)
@@ -48,7 +47,6 @@ const Movies = () => {
     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`)
     .then(res=> res.json())
     .then((data)=> {
-      console.log(data)
       setGenres(data.genres);
     })
   }, [])
@@ -72,6 +70,9 @@ const Movies = () => {
     }
   }
 
+  const handleSubmit = (e)=> {
+    e.preventDefault();
+  }
 
   const genNewSearchParams = (text)=> {
     if(text === 'All popular'){
@@ -88,13 +89,13 @@ const Movies = () => {
     <>
     {movies.length !== 0 &&
     <header>
-    <form action="">
+    <form action="" onSubmit={handleSubmit}>
         <input className='header-input'
         type="text"
         name="search"
         value={term}
         onChange={(e)=> setTerm(e.target.value)}/>
-        <button className='header-btn'>Search</button>
+        <button className='header-btn'><FaSearch /></button>
     </form>
   </header>}
 

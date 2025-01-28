@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
 const TvShows = () => {
   const [tvShows, setTvShows] = useState([]);
@@ -45,8 +46,8 @@ const TvShows = () => {
       }
 
     /* Form Search */
-    const inputSearch = (e)=> {
-      setTerm(e);
+    const handleSubmit = (e)=> {
+      e.preventDefault();
     }
 
     const genNewSearchParams = (text)=> {
@@ -64,14 +65,14 @@ const TvShows = () => {
     <>
     {tvShows.length !== 0 &&
     <header>
-    <form action="">
-        <input className='header-input'
-        type="text"
-        name="search"
-        value={term}
-        onChange={(e)=> inputSearch(e.target.value)}/>
-        <button className='header-btn'>Search</button>
-    </form>
+      <form action="" onSubmit={handleSubmit}>
+          <input className='header-input'
+          type="text"
+          name="search"
+          value={term}
+          onChange={(e)=> setTerm(e.target.value)}/>
+          <button className='header-btn'><FaSearch /></button>
+      </form>
   </header>}
 
       { loading && 

@@ -30,6 +30,26 @@ body{
   max-width: 1440px;
   display: flex;
 }
+
+.error-element{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 2rem;
+}
+.error-element .error-link{
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2rem 0;
+  text-decoration: underline;
+  color: hsl(184, 59%, 26%);
+}
+
 .main-display{
   display: flex;
 }
@@ -52,22 +72,29 @@ header{
 header form{
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 2rem;
+  position: relative;
+  border: 2px solid hsl(0, 0%, 50%);
+  padding: 0.2rem 1rem;
+  border-radius: 100vmax;
+  width: 400px;
+}
+.header-input:focus + header form{
+  border: 2px solid hsl(0, 0%, 100%);
+  outline: #fff;
 }
 .header-input{
   width: 300px;
   background-color: transparent;
-  border: 2px solid hsl(0, 0%, 30%);
+  outline: none;
   border-radius: 0.2rem;
-  padding: 0.2rem 0.5rem;
   color: #fff;
 }
 header .header-btn{
-  background-color: hsl(240, 91%, 13%);
-  border-radius: 0.3rem;
   color: #fff;
-  padding: 0.2rem 1rem;
+  border-left:  2px solid hsl(0, 0%, 50%);
+  padding: 0 1.5rem 0 1rem;
+  position: absolute;
+  right: 0;
 }
 
 header nav ul{
@@ -167,9 +194,9 @@ header nav ul{
   width: 100%;
   height: 100%;
   padding: 8rem 2rem;
-  background: linear-gradient(45deg,
-    rgba(26, 4, 51, 0.50),
-    rgba(13, 1, 36, 0.50)), 
+    background: linear-gradient(45deg,
+    rgba(26, 4, 51, 0.650),
+    rgba(13, 1, 36, 0.650)), 
     url("../images/pic3-low.jpg");
     background-repeat: no-repeat;
     background-position: center;
@@ -184,10 +211,28 @@ header nav ul{
 .text{
   font-weight: 500;
 }
+.home-links{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5rem;
+  gap: 2rem;
+}
+.home-links .home-link{
+  background-color: hsl(184, 59%, 26%);
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 100vmax;
+}
 
 .error-wrapper{
+  width: 80vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   text-align: center;
-  margin: 5rem 5rem;
+  height: 100vh;
 }
 .error-text{
   font-weight: 500;
@@ -196,6 +241,62 @@ header nav ul{
 }
 .go-back-text{
   text-decoration: underline;
+}
+
+/* SHOWCASE SECTION */
+.showcase-section{
+  padding: 2rem 2rem;
+}
+.heading-3{
+  color: hsl(184, 54%, 55%);
+  font-weight: 500;
+}
+.showcase-cards{
+  width: 98%;
+  margin: 0 auto;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 160px;
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+.showcase-card .card-img{
+  border-radius: 0.5rem;
+}
+.showcase-card{
+  border-radius: 0.5rem;
+  max-width: 200px;
+  margin-bottom: 2rem;
+}
+.showcase-card:hover{
+  border-radius: 0.5rem;
+  transform: scale(1.025);
+}
+.showcase-cards .showcase-card .card-title{
+  font-size: 0.5rem;
+}
+.showcase-toggle-div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.showcase-toggle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.toggle-item{
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(184, 59%, 26%);
+  padding: 0.3rem 1rem;
+  border-radius: 100vmax;
+}
+.toggle-item:hover{
+  background-color: hsl(189, 68%, 18%);
 }
 
 /* MOVIE SECTION */
@@ -208,7 +309,7 @@ header nav ul{
 .movie-filters{
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   margin: 0.3rem 0 0 2rem;
 }
 .movie-filters select{
@@ -224,6 +325,15 @@ header nav ul{
   border-radius: 1rem;
   font-size: 0.8rem;
   font-weight: 500;
+}
+.alpha-select{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  
+}
+.alpha-select .alpha-option{
+  width: 30px;
 }
 
 .cards{
@@ -346,7 +456,7 @@ header nav ul{
   gap: 6rem;
 }
 .preview-movie-name{
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
@@ -441,8 +551,68 @@ header nav ul{
 }
 .heading-2{
   margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: hsl(184, 54%, 55%);
 }
 .recommendation{
   background-color: hsl(0, 0%, 20%);
   height: 180px;
+}
+
+/* Actor preview section */
+.actor-preview-section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+  margin: 3rem 2rem;
+}
+.biography-content{
+  width: 50%;
+}
+.bio-image-div img{
+  border-radius: 0.5rem;
+}
+.bio-name{
+  padding: 0.6rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: hsl(0, 0%, 90%);
+}
+.bio-place{
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.bio-details{
+  margin-top: 2rem;
+}
+.bio-details p span{
+  margin-right: 0.5rem;
+  font-weight: 500;
+}
+.bio-details p{
+  margin: 0.5rem 0;
+}
+.bio-details p:last-child{
+  margin-top: 2rem;
+}
+.known-for-section{
+  width: 100%;
+  background-color: hsl(240, 100%, 2%);
+  margin: 0 2rem;
+}
+.known-for-section .heading-2{
+  width: 100%;
+/*   background-color: hsl(184, 72%, 17%); */
+  color: hsl(184, 65%, 61%);
+  text-align: center;
+  text-decoration: underline;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.known-for-section .cards{
+  margin-top: -3rem;
 }

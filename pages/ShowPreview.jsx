@@ -75,7 +75,7 @@ const ShowPreview = () => {
                 <div className="gradient"></div>
                     <img src={`https://image.tmdb.org/t/p/original/${show.backdrop_path}`} alt={show.title} className='preview-img'/>
                 </div>
-                <button className="backButton" onClick={backToShows}>Back</button>
+                <button className="backButton" onClick={backToShows}>&larr; Back</button>
                 <div className="preview-absolute">
                     <div className="preview-movie-name-div">
                     <h2 className="preview-movie-name">
