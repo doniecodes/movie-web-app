@@ -13,6 +13,7 @@ const MoviePreview = () => {
     const [movie, setMovie] = useState(null);
     const [trailerUrl, setTrailerUrl] = useState("");
     const [trailerVideo, setTrailerVideo] = useState(null);
+    const [credits, setCredits] = useState([]);
     const [recommended, setRecommended] = useState(null);
     const [genres, setGenres] = useState([]);
     const navigate = useNavigate();
@@ -70,8 +71,18 @@ const MoviePreview = () => {
         }
     }) : null;
 
-    // RECOMMENDED MOVIES
+    // CAST
     const movieName = movie !== null ? movie.title.split(' ')[0] : "";
+    useEffect(()=> {
+        fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&include_adult=false&query=${movieName}`)
+        .then(res=> res.json())
+        .then((data)=> {
+            console.log(data)
+            setCredits(data.cast);
+        })
+    }, [movie, id]);
+
+    // RECOMMENDED MOVIES
     useEffect(()=> {
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&include_adult=false&query=${movieName}`)
         .then(res=> res.json())
@@ -168,6 +179,23 @@ const MoviePreview = () => {
             }
         </div>
     </section>
+
+    <section className="cast-section">
+        <h2 className="heading-2">Cast</h2>
+        <div className="cast-cards-container">
+            {/* <button className="handle left-handle">&#8249;</button> */}
+            <div className="cast-cards">
+            {credits.map((credit)=> {
+                return <Link to={`/actors/${credit.id}`} key={crypto.randomUUID()} className="cast-image-div">
+                <img src={`https://image.tmdb.org/t/p/original/${credit.profile_path}`} alt={credit.name} className='cast-image'/>
+                <h4 className="cast-name">{credit.name}</h4>
+            </Link>
+            })}
+            </div>
+            {/* <button className="handle right-handle">&#8250;</button> */}
+        </div>
+    </section>
+
     </>
   )
 }
