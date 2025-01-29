@@ -51,7 +51,7 @@ const Movies = () => {
     })
   }, [])
 
-  const movieElements = movies.map((movie)=> {
+  const movieElements = movies.length !== 0 && movies.map((movie)=> {
     return <Movie key={movie.id} movie={movie} genres={genres} count={count}/>
   })
 
