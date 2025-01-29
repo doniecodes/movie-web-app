@@ -23,6 +23,7 @@ import ActorPreview from '../pages/ActorPreview';
 import ErrorLoader from '../pages/ErrorLoader'
 
     
+
     const router = createBrowserRouter(
       createRoutesFromElements(
         <Route path="/" element={<MainOutlet/>}

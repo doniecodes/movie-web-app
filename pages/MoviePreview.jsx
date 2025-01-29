@@ -16,6 +16,7 @@ const MoviePreview = () => {
     const [credits, setCredits] = useState([]);
     const [recommended, setRecommended] = useState(null);
     const [genres, setGenres] = useState([]);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(()=> {
@@ -36,14 +37,22 @@ const MoviePreview = () => {
 
     /* Trailer Video function */
     const handleTrailerVideo = async ()=> {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`)
-        if(!response.ok){
-            console.error("could not find a video for this movie");
+        try{
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`)
+            if(!response.ok){
+                throw {
+                    message : "could not find a video for this movie",
+                    statusText: response.statusText,
+                    status : response.status
+                }
+            }
+            const data = await response.json();
+            const key = data.results[0].key;
+            setTrailerVideo(data.results[0]);
+            setTrailerUrl(`https://www.youtube.com/embed/${key}?autoplay=0&controls=0`);
+        } catch(err){
+            setError("could not find a video for this movie");
         }
-        const data = await response.json();
-        const key = data.results[0].key;
-        setTrailerVideo(data.results[0]);
-        setTrailerUrl(`https://www.youtube.com/embed/${key}?autoplay=0&controls=0`);
     }
     
     // Go BACK BTN FUNCTION
@@ -77,7 +86,6 @@ const MoviePreview = () => {
         fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&include_adult=false&query=${movieName}`)
         .then(res=> res.json())
         .then((data)=> {
-            console.log(data)
             setCredits(data.cast);
         })
     }, [movie, id]);
@@ -152,8 +160,13 @@ const MoviePreview = () => {
         src={trailerUrl}>
             
         </iframe>
-        </section>
-    }
+        </section> }
+
+        {error && 
+        <div className="no-videos-div">
+        <button onClick={()=> setError(null)}>X</button>
+        <h2>Error: {error}</h2>
+    </div>}
 
     {/* Recommendations */}
     <section className='recommendations-section'>

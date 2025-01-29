@@ -4,24 +4,8 @@ import Movie from '../components/Movie';
 import { useSearchParams, useLoaderData } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
-export async function loaderMovies (count, searchParams){
-    const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&include_adult=false&page=${count}&${searchParams}`)
-
-    if(!res.ok){
-      throw {
-        message : "could not fetch movies",
-        statusText : res.statusText,
-        status : res.status
-      }
-    }
-    const data = await res.json();
-    return data.results;
-}
-
 const Movies = () => {
-/*   const data = useLoaderData();
-  console.log(data) */
-
+  
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [genres, setGenres] = useState([]);

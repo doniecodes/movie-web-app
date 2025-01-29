@@ -319,6 +319,40 @@ body ::-webkit-scrollbar{
   border: 2.5px solid hsl(0, 0%, 30%);
 }
 
+/* Videos Error Div */
+.no-videos-div{
+  background-color: #000;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  position: fixed;
+  top: 5%;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 80%;
+  height: 80%;
+  z-index: 999;
+  margin: 0 auto;
+  border-radius: 0.3rem;
+  box-shadow: 50px 50px 50px 1000px rgba(0, 0, 0, 0.5);
+}
+.no-videos-div button{
+    display: block;
+    justify-self: flex-end;
+    font-size: 1.8rem;
+    font-weight: 500;
+    background-color: hsl(240, 91%, 13%);
+    border-radius: 0.2rem;
+    padding: 0rem 1rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
 
 /* MOVIE SECTION */
 .movies-section,

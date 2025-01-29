@@ -57,24 +57,22 @@ const ActorPreview = () => {
               Known for these movies
           </h2>
       <div className="cards">
-      { actorMoreDetails && actorMoreDetails.known_for.map((movie)=> {
-        return <Link key={movie.id} to={`/movies/${movie.id}`}>
-                  <div className="card">
-                    <div className="image-div">
-                      <img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt={movie.title} className='card-img'/>
+      { actorMoreDetails && actorMoreDetails.known_for.map((movie)=> {  
+        return <Link key={movie.id} to={movie.media_type !== "tv" ? `/movies/${movie.id}` : `/actors/${params.id}`}>       <div className="card">
+                  <div className="image-div">
+                    <img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt={movie.title} className='card-img'/>
                       <p>{movie.vote_average.toFixed(1)}</p>
                     </div>
                     <div className="card-details">
-                      <h2 className="card-title">{movie.title}</h2>
-                      <p className='year-and-genre'>{movie.first_air_date === null ? movie.release_date : movie.first_air_date} | <span>{/* {genreNames} */}</span> </p>
+                      <h2 className="card-title">{movie.media_type !== "tv" ? movie.title : movie.name}</h2>
+                      <p className='year-and-genre'>{movie.media_type !== "tv" ? movie.release_date : movie.first_air_date} </p>
                     </div>
                   </div>
               </Link>
-            })
-          }
+            })  
+          }  
       </div>
-  </section> : null
-    }
+  </section> : null }
     </>
   )
 }
