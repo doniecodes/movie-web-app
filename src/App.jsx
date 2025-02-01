@@ -15,7 +15,7 @@ import Movies from '../pages/Movies';
 import Trending from '../pages/Trending';
 import Actors from '../pages/Actors';
 import Favourites  from '../pages/Favourites';
-import SignUp from '../pages/SignUp';
+import SignUp, { loader as signupLoader } from '../pages/SignUp';
 import { authRequired } from '../data/utils';
 import MoviePreview from '../pages/MoviePreview';
 import ShowPreview from '../pages/ShowPreview';
@@ -44,7 +44,8 @@ import ErrorLoader from '../pages/ErrorLoader'
           <Route path="favourites" element={<Favourites />}
           loader={async ({request})=> await authRequired(request)} />
 
-          <Route path="signup" element={<SignUp />} />
+          <Route path="signup" element={<SignUp />}
+          loader={signupLoader}/>
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>

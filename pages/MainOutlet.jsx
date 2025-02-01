@@ -18,6 +18,8 @@ const MainOutlet = () => {
         } : null
     }
 
+    const signOut = localStorage.removeItem("isLoggedIn");
+
   return (
     <>
     <div className="container">
@@ -54,6 +56,7 @@ const MainOutlet = () => {
 
                 {/* sign up button */}
                 <Link to="signup" className='sign-up-btn'><span><FaUser /></span>Sign Up</Link>
+               {/*  <button className="log-out-btn" onClick={signOut}>Log Out</button> */}
 
                 {/* tmdb attribution */}
                 <img src="../images/tmdb.svg" alt="" className='tmdb-svg'/>

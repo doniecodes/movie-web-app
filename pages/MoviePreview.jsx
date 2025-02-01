@@ -5,10 +5,10 @@ import {FaHeart} from 'react-icons/fa'
 import {FaPlay} from 'react-icons/fa'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom'
+import { authRequired } from '../data/utils'
 
 
 const MoviePreview = () => {
-    const location = useLocation();
     let {id} = useParams();
     const [movie, setMovie] = useState(null);
     const [trailerUrl, setTrailerUrl] = useState("");
@@ -17,6 +17,9 @@ const MoviePreview = () => {
     const [recommended, setRecommended] = useState(null);
     const [genres, setGenres] = useState([]);
     const [error, setError] = useState(null);
+    const [favourites, setFavourites] = useState(JSON.parse(localStorage.getItem("movies")) || []);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(()=> {
@@ -103,16 +106,16 @@ const MoviePreview = () => {
     const recommendedExist = recommended !== null && recommended;
     const similarMovies = recommendedExist && recommended.filter((similar)=> similar.title !== movie.title).slice(0, 5);
 
+    
+    /* Adding movie to favourites */
+    
     const handleToFavourites = (movieId)=> {
-        /* fetch(`https://api.themoviedb.org/3/account/${movieId}/favorite`, {
-            
-            method : 'POST',
-            headers : {
-                accept: 'application/json',
-                'content-type': 'application/json'
-            }
-        }) */
+          !favourites.includes(movie) ?
+          setFavourites((prevState)=> {
+            return [...prevState, movie]
+        }) : null 
     }
+    localStorage.setItem("movies", JSON.stringify(favourites));
 
   return (
     <>
